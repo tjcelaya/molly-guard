@@ -5,29 +5,16 @@ libdir?=$(prefix)/lib
 sbindir?=$(prefix)/sbin
 REALPATH?=/sbin
 
-all: molly-guard.8.gz shutdown
-
-%.8: DB2MAN=/usr/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages/docbook.xsl
-%.8: XP=xsltproc -''-nonet
-%.8: %.xml
-	$(XP) $(DB2MAN) $<
-
-%.gz: %
-	gzip -9 < $< > $@
-
-man: molly-guard.8
-	man -l $<
-.PHONY: man
+all: shutdown
 
 clean:
 	rm -f shutdown
-	rm -f molly-guard.8 molly-guard.8.gz
 .PHONY: clean
 
 shutdown: shutdown.in
 	sed -e 's,@cfgdir@,$(cfgdir),g;s,@REALPATH@,$(REALPATH),g' $< > $@
 
-install: shutdown molly-guard.8.gz
+install: shutdown
 	mkdir -m755 --parent $(DEST)$(libdir)/molly-guard
 	install -m755 -oroot -oroot shutdown $(DEST)$(libdir)/molly-guard/molly-guard
 
@@ -47,3 +34,11 @@ install: shutdown molly-guard.8.gz
 	mkdir -m755 --parent $(DEST)$(prefix)/share/man/man8
 	install -m644 -oroot -groot molly-guard.8.gz $(DEST)$(prefix)/share/man/man8
 .PHONY: install
+
+uninstall:
+	rm $(DEST)$(sbindir)/poweroff
+	rm $(DEST)$(sbindir)/halt
+	rm $(DEST)$(sbindir)/reboot
+	rm $(DEST)$(sbindir)/shutdown
+	rm $(DEST)$(prefix)/share/man/man8/molly-guard.8.gz
+.PHONY: uninstall
