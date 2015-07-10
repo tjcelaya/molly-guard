@@ -51,4 +51,4 @@ Details available in the man page\
 Additionally, molly-guard installs shutdown scripts into /usr/local/sbin,\
 which must come earlier in your path, this program will not run if you use an\
 absolute path to your shutdown script.\
-=====================
+====================="
