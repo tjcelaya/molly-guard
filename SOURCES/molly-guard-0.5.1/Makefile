@@ -15,17 +15,17 @@ shutdown: shutdown.in
 	sed -e 's,@cfgdir@,$(cfgdir),g;s,@REALPATH@,$(REALPATH),g' $< > $@
 
 install: shutdown
-        mkdir -m755 --parent $(DESTDIR)$(libdir)/molly-guard
-        install -m755 shutdown $(DESTDIR)$(libdir)/molly-guard/molly-guard
+	mkdir -m755 --parent $(DESTDIR)$(libdir)/molly-guard
+	install -m755 shutdown $(DESTDIR)$(libdir)/molly-guard/molly-guard
 
-        mkdir -m755 --parent $(DESTDIR)$(cfgdir)
-        install -m644 rc $(DESTDIR)$(cfgdir)
-        cp -r run.d $(DESTDIR)$(cfgdir)
+	mkdir -m755 --parent $(DESTDIR)$(cfgdir)
+	install -m644 rc $(DESTDIR)$(cfgdir)
+	cp -r run.d $(DESTDIR)$(cfgdir)
 
-        mkdir -m755 --parent $(DESTDIR)$(cfgdir)/messages.d
+	mkdir -m755 --parent $(DESTDIR)$(cfgdir)/messages.d
 
-        mkdir -m755 --parent $(DESTDIR)$(prefix)/share/man/man8
-        install -m644 molly-guard.8.gz $(DESTDIR)$(prefix)/share/man/man8
+	mkdir -m755 --parent $(DESTDIR)$(prefix)/share/man/man8
+	install -m644 molly-guard.8.gz $(DESTDIR)$(prefix)/share/man/man8
 .PHONY: install
 
 uninstall:
