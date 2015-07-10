@@ -110,7 +110,7 @@ case "$CMD $CMDARGS" in
     ;;
 esac
 
-for script in $(run-parts --test $SCRIPTSDIR); do
+for script in $(find $SCRIPTSDIR -maxdepth 1 -executable -type f ! -name "*\.*"); do
   ret=0
   eval $script $SCRIPTARGS || ret=$?
   if [ $ret -ne 0 ]; then
